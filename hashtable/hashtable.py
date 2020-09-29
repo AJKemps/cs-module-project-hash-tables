@@ -85,8 +85,28 @@ class HashTable:
 
         Implement this.
         """
+        # get the index
         index = self.hash_index(key)
-        self.bucket_array[index] = HashTableEntry(key, value)
+
+        # create new node
+        new_node = HashTableEntry(key, value)
+        # search the linked list to see if the key is there
+        cur = self.bucket_array[index]
+
+        if cur:
+            last_node = None
+            while cur:
+                if cur.key == key:
+                    # if the key is there, overwrite the value
+                    cur.value = value
+                    return
+                last_node = cur
+                cur = cur.next
+            last_node.next = new_node
+
+        else:
+            # if key is not there, create a new HashTableEntry and insert it into the list
+            self.bucket_array[index] = new_node
 
     def delete(self, key):
         """
@@ -98,7 +118,14 @@ class HashTable:
         """
         # Your code here
 
-        # index = self.hash_index(key)
+        # figure ou the index for the key
+
+        # Search the linked list at the index for the HashTableEntry that matches the key
+
+        # If found, delete the entry from the linked list -- return the value
+
+        # If not found, return None
+
         self.put(key, None)
 
     def get(self, key):
@@ -110,10 +137,20 @@ class HashTable:
         Implement this.
         """
         # Your code here
+        # get the index
         index = self.hash_index(key)
-        hash_entry = self.bucket_array[index]
 
-        return hash_entry.value
+        # search the linked list at the index for the HashtableEntry that matches the key
+        cur = self.bucket_array[index]
+        if cur:
+            while cur:
+                if cur.key == key:
+                    return cur.value
+                cur = cur.next
+
+        # return the value for the entry, or None if not found
+
+        return None
 
     def resize(self, new_capacity):
         """
