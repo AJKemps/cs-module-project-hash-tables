@@ -25,6 +25,7 @@ class HashTable:
         # Your code here
         self.capacity = capacity
         self.bucket_array = [None for i in range(capacity)]
+        self.load = 0
 
     def get_num_slots(self):
         """
@@ -38,6 +39,8 @@ class HashTable:
         """
         # Your code here
 
+        return len(self.bucket_array)
+
     def get_load_factor(self):
         """
         Return the load factor for this hash table.
@@ -45,6 +48,9 @@ class HashTable:
         Implement this.
         """
         # Your code here
+        load_factor = self.load / self.capacity
+
+        return load_factor
 
     def fnv1(self, key):
         """
@@ -99,6 +105,9 @@ class HashTable:
                 if cur.key == key:
                     # if the key is there, overwrite the value
                     cur.value = value
+                    # increment load
+                    if cur.value is not None:
+                        self.load += 1
                     return
                 last_node = cur
                 cur = cur.next
@@ -107,6 +116,9 @@ class HashTable:
         else:
             # if key is not there, create a new HashTableEntry and insert it into the list
             self.bucket_array[index] = new_node
+            # increment load
+            if value is not None:
+                self.load += 1
 
     def delete(self, key):
         """
@@ -160,6 +172,21 @@ class HashTable:
         Implement this.
         """
         # Your code here
+
+        load_factor = self.get_load_factor()
+
+        if load_factor > 0.7:
+            old_bucket_array = self.bucket_array
+            larger_load_size = new_capacity
+            self.capacity = larger_load_size
+            self.bucket_array = [None for i in range(self.capacity)]
+
+            for item in old_bucket_array:
+                if item:
+                    cur = item
+                    while cur:
+                        self.put(cur.key, cur.value)
+                        cur = cur.next
 
 
 if __name__ == "__main__":
