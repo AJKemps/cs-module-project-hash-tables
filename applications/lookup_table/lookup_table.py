@@ -1,4 +1,6 @@
 # Your code here
+import math
+import random
 
 
 def slowfun_too_slow(x, y):
@@ -9,6 +11,13 @@ def slowfun_too_slow(x, y):
 
     return v
 
+
+pows = {}
+facts = {}
+divs = {}
+mods = {}
+
+
 def slowfun(x, y):
     """
     Rewrite slowfun_too_slow() in here so that the program produces the same
@@ -16,10 +25,30 @@ def slowfun(x, y):
     """
     # Your code here
 
+    if (x, y) not in pows:
+        pows[(x, y)] = math.pow(x, y)
+
+    v = pows[(x, y)]
+
+    if v not in facts:
+        facts[v] = math.factorial(v)
+
+    v = facts[v]
+
+    if v not in divs:
+        divs[v] = (v // (x + y))
+
+    v = divs[v]
+
+    if v not in mods:
+        mods[v] = (v % 982451653)
+
+    v = mods[v]
+
+    return v
 
 
 # Do not modify below this line!
-
 for i in range(50000):
     x = random.randrange(2, 14)
     y = random.randrange(3, 6)
