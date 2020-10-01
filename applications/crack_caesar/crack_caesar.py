@@ -3,7 +3,7 @@
 
 # Your code here
 
-ordered_freq = ["E", "A", "T", "O", "H", "N", "R", "I", "S", "D", "L", "W",
+ordered_freq = ["E", "T", "A",  "O", "H", "N", "R", "I", "S", "D", "L", "W",
                 "U", "G", "F", "B", "M", "Y", "C", "P", "K", "V", "Q", "J", "X", "Z"]
 
 
